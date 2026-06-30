@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gathr Studio | Photo Studio</title>
+  <meta name="description" content="Gathr Studio creates sharp portraits, event coverage, sports edits, posters, and brand visuals with a bold red, white, and black signature style.">
+  <style>
+    :root {
+      --red: #f20d16;
+      --red-dark: #99080e;
+      --black: #050505;
+      --ink: #111111;
+      --white: #ffffff;
+      --muted: #c7c7c7;
+      --line: rgba(255, 255, 255, 0.16);
+      --panel: #101010;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background: var(--black);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 20;
+      background: rgba(5, 5, 5, 0.82);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 76px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #000;
+    }
+
+    .brand-name {
+      display: grid;
+      gap: 1px;
+    }
+
+    .brand-name strong {
+      font-size: 1.06rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .brand-name span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: #eeeeee;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--red);
+    }
+
+    .nav-cta,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid var(--red);
+      background: var(--red);
+      color: var(--white);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .nav-cta:hover,
+    .button:hover {
+      transform: translateY(-2px);
+      background: #ff2630;
+      border-color: #ff2630;
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .hero {
+      min-height: 96vh;
+      position: relative;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      padding: 116px 0 54px;
+      background: #050505;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 78% 42%, rgba(242, 13, 22, 0.22), rgba(242, 13, 22, 0) 34%),
+        linear-gradient(90deg, rgba(5, 5, 5, 0.98) 0%, rgba(5, 5, 5, 0.88) 52%, rgba(5, 5, 5, 0.7) 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 34%;
+      background: linear-gradient(0deg, #050505 0%, rgba(5, 5, 5, 0) 100%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 570px) minmax(300px, 430px);
+      align-items: center;
+      gap: 56px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: #f4f4f4;
+      font-size: 0.83rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 3px;
+      background: var(--red);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+      font-size: clamp(3rem, 7vw, 6.9rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1 span,
+    h2 span {
+      color: var(--red);
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin-bottom: 30px;
+      color: #dddddd;
+      font-size: clamp(1rem, 1.7vw, 1.22rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 44px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      max-width: 610px;
+    }
+
+    .hero-stats div {
+      min-height: 92px;
+      padding: 18px 18px 16px 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .hero-stats div:last-child {
+      border-right: 0;
+      padding-left: 18px;
+    }
+
+    .hero-stats strong {
+      display: block;
+      color: var(--white);
+      font-size: 1.65rem;
+      line-height: 1.1;
+    }
+
+    .hero-stats span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .hero-banner {
+      justify-self: end;
+      width: min(100%, 410px);
+      max-height: calc(100vh - 150px);
+      object-fit: contain;
+      filter: drop-shadow(0 28px 46px rgba(242, 13, 22, 0.22));
+    }
+
+    .hero-banner-link {
+      justify-self: end;
+      display: block;
+      width: min(100%, 410px);
+      transition: transform 180ms ease;
+    }
+
+    .hero-banner-link:hover {
+      transform: translateY(-4px);
+    }
+
+    .hero-banner-link .hero-banner {
+      width: 100%;
+    }
+
+    section {
+      padding: 92px 0;
+    }
+
+    .section-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 28px;
+      margin-bottom: 34px;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(2.1rem, 4vw, 4.2rem);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .section-heading p {
+      max-width: 430px;
+      margin-bottom: 4px;
+      color: var(--muted);
+    }
+
+    .services {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      background: #d8d8d8;
+      border: 1px solid #d8d8d8;
+    }
+
+    .service {
+      min-height: 245px;
+      padding: 28px;
+      background: var(--white);
+      display: grid;
+      align-content: space-between;
+    }
+
+    .service-number {
+      color: var(--red);
+      font-weight: 900;
+      font-size: 0.86rem;
+      letter-spacing: 0.12em;
+    }
+
+    .service h3 {
+      margin-bottom: 12px;
+      font-size: 1.45rem;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .service p {
+      margin-bottom: 0;
+      color: #555555;
+      font-size: 0.96rem;
+    }
+
+    .work {
+      background:
+        linear-gradient(180deg, rgba(153, 8, 14, 0.18), rgba(5, 5, 5, 0) 40%),
+        var(--black);
+    }
+
+    .work-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.82fr) minmax(320px, 1.18fr);
+      gap: 36px;
+      align-items: stretch;
+    }
+
+    .poster-preview {
+      min-height: 680px;
+      background: url("banner.png") center top / cover no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .process {
+      display: grid;
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 22px;
+      align-items: start;
+      padding: 30px;
+      background: #0b0b0b;
+    }
+
+    .process-step strong {
+      color: var(--red);
+      font-size: 1.1rem;
+    }
+
+    .process-step h3 {
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      font-size: 1.28rem;
+    }
+
+    .process-step p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .cta {
+      padding: 78px 0;
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .cta .section-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .cta h2 {
+      max-width: 740px;
+      color: var(--white);
+    }
+
+    .cta .button {
+      flex: 0 0 auto;
+      background: var(--black);
+      border-color: var(--black);
+    }
+
+    .site-footer {
+      padding: 28px 0;
+      background: #000000;
+      border-top: 1px solid var(--line);
+      color: #bdbdbd;
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 900px) {
+      .nav {
+        min-height: 70px;
+      }
+
+      .brand img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 104px;
+      }
+
+      .hero-inner,
+      .work-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner > div {
+        order: 2;
+      }
+
+      .hero-banner {
+        order: 1;
+        justify-self: center;
+        width: min(100%, 420px);
+        max-height: none;
+      }
+
+      .hero-banner-link {
+        order: 1;
+        justify-self: center;
+        width: min(100%, 420px);
+      }
+
+      .section-heading,
+      .cta .section-inner,
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .service-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .poster-preview {
+        min-height: 620px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav {
+        width: min(100% - 22px, 1180px);
+        gap: 12px;
+      }
+
+      .brand {
+        gap: 10px;
+      }
+
+      .brand-name strong {
+        font-size: 0.94rem;
+      }
+
+      .brand-name span {
+        font-size: 0.68rem;
+      }
+
+      .nav-cta {
+        min-height: 40px;
+        padding: 0 12px;
+        font-size: 0.72rem;
+      }
+
+      .hero {
+        padding-bottom: 34px;
+      }
+
+      h1 {
+        font-size: 3rem;
+      }
+
+      .hero-stats,
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats div,
+      .hero-stats div:last-child {
+        min-height: auto;
+        padding: 16px 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-stats div:last-child {
+        border-bottom: 0;
+      }
+
+      section {
+        padding: 68px 0;
+      }
+
+      .service {
+        min-height: 210px;
+      }
+
+      .process-step {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 24px;
+      }
+
+      .poster-preview {
+        min-height: 520px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="Gathr Studio home">
+        <img src="logo.png" alt="Gathr Studio logo">
+        <span class="brand-name">
+          <strong>Gathr Studio</strong>
+          <span>Photo Studio</span>
+        </span>
+      </a>
+
+      <div class="nav-links" aria-label="Page sections">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+      </div>
+
+      <a class="nav-cta" href="https://wa.link/and" onclick="return gtag_report_conversion(this.href)" rel="noopener noreferrer">Book Now</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="Gathr Studio hero">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">Red. White. Black. Studio finish.</p>
+          <h1>Gathr <span>Studio</span></h1>
+          <p class="hero-copy">Photo shoots, sports posters, event coverage, and premium edits built for people who want their images to feel powerful before a word is spoken.</p>
+          <div class="hero-actions">
+            <a class="button" href="https://wa.link/and" onclick="return gtag_report_conversion(this.href)" rel="noopener noreferrer">Start a Shoot</a>
+            <a class="button secondary" href="https://wa.link/and" onclick="return gtag_report_conversion(this.href)" rel="noopener noreferrer">View Services</a>
+          </div>
+          <div class="hero-stats" aria-label="Studio highlights">
+            <div>
+              <strong>4K</strong>
+              <span>Poster-ready retouching</span>
+            </div>
+            <div>
+              <strong>24h</strong>
+              <span>Fast preview delivery</span>
+            </div>
+            <div>
+              <strong>100%</strong>
+              <span>Custom visual direction</span>
+            </div>
+          </div>
+        </div>
+
+        <a class="hero-banner-link" href="https://wa.link/and" onclick="return gtag_report_conversion(this.href)" rel="noopener noreferrer" aria-label="Chat with Gathr Studio on WhatsApp">
+          <img class="hero-banner" src="banner.png" alt="Gathr Studio best services banner">
+        </a>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="section-inner">
+        <div class="section-heading">
+          <h2>Studio <span>Services</span></h2>
+          <p>From clean portraits to energetic campaign posters, every service is built around strong lighting, crisp finishing, and a memorable final frame.</p>
+        </div>
+
+        <div class="service-grid">
+          <article class="service">
+            <span class="service-number">01</span>
+            <div>
+              <h3>Portrait Sessions</h3>
+              <p>Personal, professional, and creator portraits with controlled lighting and sharp retouching.</p>
+            </div>
+          </article>
+          <article class="service">
+            <span class="service-number">02</span>
+            <div>
+              <h3>Sports Posters</h3>
+              <p>High-impact player edits, match-day graphics, tournament posters, and social media creatives.</p>
+            </div>
+          </article>
+          <article class="service">
+            <span class="service-number">03</span>
+            <div>
+              <h3>Event Coverage</h3>
+              <p>Coverage for launches, celebrations, teams, and community moments with a polished delivery set.</p>
+            </div>
+          </article>
+          <article class="service">
+            <span class="service-number">04</span>
+            <div>
+              <h3>Brand Visuals</h3>
+              <p>Product, profile, and promo visuals shaped for ads, reels, thumbnails, and print-ready use.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="work" id="work">
+      <div class="section-inner">
+        <div class="section-heading">
+          <h2>Signature <span>Look</span></h2>
+          <p>The Gathr style is dramatic, contrast-heavy, and made to stop the scroll without losing detail.</p>
+        </div>
+
+        <div class="work-layout">
+          <div class="poster-preview" role="img" aria-label="Gathr Studio sports poster banner"></div>
+          <div class="process" id="process">
+            <article class="process-step">
+              <strong>Plan</strong>
+              <div>
+                <h3>Concept and Shot List</h3>
+                <p>We lock the mood, outfit, backdrop, poses, and final usage before the camera comes out.</p>
+              </div>
+            </article>
+            <article class="process-step">
+              <strong>Shoot</strong>
+              <div>
+                <h3>Lighting and Direction</h3>
+                <p>Guided posing and clean lighting keep the session focused, fast, and comfortable.</p>
+              </div>
+            </article>
+            <article class="process-step">
+              <strong>Edit</strong>
+              <div>
+                <h3>Retouch and Design</h3>
+                <p>Color, contrast, skin cleanup, background work, and poster graphics are finished with care.</p>
+              </div>
+            </article>
+            <article class="process-step">
+              <strong>Deliver</strong>
+              <div>
+                <h3>Web and Print Files</h3>
+                <p>You receive polished files prepared for social posts, profile use, banners, and print formats.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="section-inner">
+        <h2>Ready for your next frame?</h2>
+        <a class="button" href="https://wa.link/and" onclick="return gtag_report_conversion(this.href)" rel="noopener noreferrer">Chat on WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>Gathr Studio</span>
+      <span>Photo studio for portraits, posters, events, and brand visuals.</span>
+    </div>
+  </footer>
+
+  <script>
+    if (typeof window.gtag_report_conversion !== "function") {
+      window.gtag_report_conversion = function (url) {
+        if (url) {
+          window.location.href = url;
+        }
+        return false;
+      };
+    }
+  </script>
+</body>
+</html>
